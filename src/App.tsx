@@ -3,17 +3,18 @@ import {createQR} from "@solana/pay";
 import QRCodeStyling from '@solana/qr-code-styling';
 
 const App: React.FC = () => {
-  const beUrl = process.env.REACT_APP_BE_URL || 'solana:https://solana-nft-server.herokuapp.com/donate' +
-    '?recipient=BHmPGsD73MtK1XzFwNTuFYXoSsTcig7HWbwbq9MufBLv' +
-    '&amount=0.1' +
-    '&message=send SOL to alex wallet';
-  const encodedUrl = encodeURI(beUrl)
+  const beUrl = process.env.REACT_APP_BE_URL || 'https://solana-nft-server.herokuapp.com/donate';
+  const recipient = encodeURIComponent('?recipient=BHmPGsD73MtK1XzFwNTuFYXoSsTcig7HWbwbq9MufBLv');
+  const amount = encodeURIComponent('&amount=0.1');
+  const message = encodeURIComponent('&message=send');
+
   const [qr, setQr]= useState<QRCodeStyling | null>(null);
 
-  console.log(encodedUrl)
   const divRef = useRef<HTMLDivElement>(null)
   useEffect(() => {
-    const initialQr = createQR(encodedUrl, 256)
+    const fullURL = 'solana:' + beUrl + recipient + amount + message;
+    console.log(fullURL)
+    const initialQr = createQR(fullURL, 256)
     setQr(initialQr)
   }, [])
 
