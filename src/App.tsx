@@ -14,11 +14,9 @@ const App: React.FC = () => {
   // Show the QR code
   useEffect(() => {
     // window.location is only available in the browser, so create the URL in here
-    const apiUrl = `https://f75d-83-139-4-54.eu.ngrok.io/donate?recipient=${recipient}&amount=${amount}`
+    const apiUrl = `https://f75d-83-139-4-54.eu.ngrok.io/donate?recipient=${recipient}&amount=${amount}&label=Cookies Inc&message=Thanks for your order! 🍪`
     const urlParams: TransactionRequestURLFields = {
-      link: new URL(apiUrl),
-      label: "Cookies Inc",
-      message: "Thanks for your order! 🍪",
+      link: new URL(apiUrl)
     }
     const solanaUrl = encodeURL(urlParams)
     console.log(`solanaUrl ${solanaUrl}`)
