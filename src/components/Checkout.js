@@ -4,6 +4,7 @@ import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 import { Keypair, Transaction } from "@solana/web3.js";
 import {useParams, useSearchParams} from "react-router-dom";
 import { useEffect, useMemo, useState } from "react";
+import GlobalConfig from "../config";
 
 export default function Checkout() {
     const [searchParams] = useSearchParams();
@@ -19,6 +20,8 @@ export default function Checkout() {
     // Generate the unique reference which will be used for this transaction
     const reference = useMemo(() => Keypair.generate().publicKey, []);
 
+    const recipient = GlobalConfig.recipient;
+
     // Use our API to fetch the transaction for the selected items
     async function getTransaction() {
         if (!publicKey) {
@@ -29,7 +32,9 @@ export default function Checkout() {
             account: publicKey.toString(),
         }
 
-        const response = await fetch(`/api/makeTransaction?${searchParams.toString()}`, {
+        console.log(`${GlobalConfig.beUrl}/donate?recipient=${recipient}&amount=${total}&label=Cookies Inc&message=Thanks for your order! 🍪`)
+
+        const response = await fetch( `${GlobalConfig.beUrl}/donate?recipient=${recipient}&amount=${total}&label=Cookies Inc&message=Thanks for your order! 🍪`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -38,6 +43,8 @@ export default function Checkout() {
         })
 
         const json = await response.json()
+
+        console.log(json, 'resss')
 
         if (response.status !== 200) {
             console.error(json);

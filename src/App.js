@@ -3,6 +3,8 @@ import {createQR, encodeURL, TransactionRequestURLFields} from "@solana/pay";
 import { useWallet } from '@solana/wallet-adapter-react'
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui'
 import Products from "./components/Products";
+import GlobalConfig from "./config";
+
 
 function App() {
 
@@ -11,13 +13,13 @@ function App() {
   // Unique address that we can listen for payments to
   // const reference = useMemo(() => Keypair.generate().publicKey, [])
 
-  const recipient = 'BHmPGsD73MtK1XzFwNTuFYXoSsTcig7HWbwbq9MufBLv'
+  const recipient = GlobalConfig.recipient;
   const amount = '0.1'
 
   // Show the QR code
   useEffect(() => {
     // window.location is only available in the browser, so create the URL in here
-    const apiUrl = `https://246d-83-139-4-54.eu.ngrok.io/donate?recipient=${recipient}&amount=${amount}&label=Cookies Inc&message=Thanks for your order! 🍪`
+    const apiUrl = `${GlobalConfig.beUrl}/donate?recipient=${recipient}&amount=${amount}&label=Cookies Inc&message=Thanks for your order! 🍪`
     const urlParams = {
       link: new URL(apiUrl)
     }

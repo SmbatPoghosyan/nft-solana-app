@@ -13,7 +13,7 @@ import {
     Route,
     Link
 } from "react-router-dom";
-// Default styles that can be overridden by your app
+
 import '@solana/wallet-adapter-react-ui/styles.css';
 import './index.css';
 import Checkout from "./components/Checkout";
