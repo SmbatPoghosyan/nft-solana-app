@@ -1,12 +1,13 @@
 import React, {useEffect, useRef} from 'react';
 import {createQR, encodeURL, TransactionRequestURLFields} from "@solana/pay";
-// import { useWallet } from '@solana/wallet-adapter-react'
+import { useWallet } from '@solana/wallet-adapter-react'
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui'
+import Products from "./components/Products";
 
 function App() {
 
-  const qrRef = useRef(null)
-
+  const qrRef = useRef(null);
+  const { publicKey } = useWallet()
   // Unique address that we can listen for payments to
   // const reference = useMemo(() => Keypair.generate().publicKey, [])
 
@@ -39,8 +40,8 @@ function App() {
 
         <div ref={qrRef}/>
 
-        {/*/!* We disable checking out without a connected wallet *!/*/}
-        {/*<Products submitTarget='/checkout' enabled={publicKey !== null} />*/}
+        {/* We disable checking out without a connected wallet */}
+        <Products submitTarget='/checkout' enabled={publicKey !== null} />
       </div>);
 }
 

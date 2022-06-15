@@ -7,10 +7,16 @@ import { WalletModalProvider } from '@solana/wallet-adapter-react-ui';
 import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
 import { clusterApiUrl } from '@solana/web3.js';
 import { PhantomWalletAdapter, SolflareWalletAdapter } from '@solana/wallet-adapter-wallets';
-
+import {
+    BrowserRouter as Router,
+    Routes,
+    Route,
+    Link
+} from "react-router-dom";
 // Default styles that can be overridden by your app
 import '@solana/wallet-adapter-react-ui/styles.css';
 import './index.css';
+import Checkout from "./components/Checkout";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -35,11 +41,20 @@ root.render(
         <ConnectionProvider endpoint={endpoint}>
             <WalletProvider wallets={wallets} autoConnect>
                 <WalletModalProvider>
-                    <App />
+                    <Router>
+                        <div>
+                            <Routes>
+                                <Route exact path="/" element={<App />} />
+                                <Route exact path="/checkout" element={<Checkout />} />
+                            </Routes>
+                        </div>
+                    </Router>
                 </WalletModalProvider>
             </WalletProvider>
         </ConnectionProvider>
+
     </React.StrictMode>
+
 );
 
 // If you want to start measuring performance in your app, pass a function
